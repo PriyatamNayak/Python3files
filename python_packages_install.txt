@@ -1,0 +1,22 @@
+					links
+http://h2o-release.s3.amazonaws.com/h2o/master/4295/index.html
+https://doc.scrapy.org/en/latest/intro/tutorial.html
+https://www.djangoproject.com/start/
+https://pythonprogramming.net/tokenizing-words-sentences-nltk-tutorial/
+http://opencv-python-tutroals.readthedocs.io/en/latest/py_tutorials/py_setup/py_setup_in_windows/py_setup_in_windows.html#install-opencv-python-in-windows
+https://in.mathworks.com/matlabcentral/answers/333532-how-to-extract-and-save-frames-in-a-video
+http://www.bogotobogo.com/Matlab/Matlab_Tutorial_Video_Processing_1_Object_Detection_by_Color_Thresholding.php
+https://conda.io/docs/user-guide/getting-started.html
+https://packaging.python.org/guides/installing-using-pip-and-virtualenv/
+
+
+
+				commands to install packages
+conda install -c conda-forge scrapy
+conda update pip
+pip install http://h2o-release.s3.amazonaws.com/h2o/master/4295/Python/h2o-3.19.0.4295-py2.py3-none-any.whl
+conda install -c conda-forge tensorflow 
+conda install -c menpo opencv 
+
+						
+
