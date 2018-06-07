@@ -1,0 +1,138 @@
+			steps for virtual environments
+1. installing virtualenvironment: pip install virtualenv
+2. creating virtual environmnt: py -m virtualenv envt_name
+3. activate virtualenv: .\env_name\Scripts\activate
+4. installing basic packages: pip install requests
+5. deactivation: deactivate
+virtualenv: scrapping, project-mylearn; djangowork, project-mysite (blog app), h2owork
+
+				steps for django
+
+1. open anaconda   or py -m virtualenv djangowork, activate, work, deactivate
+2. cd C:\Users\Amit\Anaconda3\Lib\site-packages\django	
+3. django-admin.py startproject project_name(mywebstart)
+4. cd project_name(mywebstart)
+5. pip install mysqlclient (in mywebstart)
+6. python manage.py startapp name (webstart)
+   change the default title of the admin templates in "C:\Users\Amit\djangowork\Lib\site-packages\django\contrib\admin\sites.py"
+   and "django\view\templates\default_urlconf" ,"django\contrib\admin\template\admin\base_site"
+
+7. update models.py according to your needs. ex
+	class posts(models.Model):
+	author = models.CharField(max_length = 30)
+	title = models.CharField(max_length =100)
+	bodytext = models.TextField()
+	timestamp = models.DateTimeField()
+
+8. update views.py according to your needs.HttpResponse is required. example 
+	from django.http import HttpResponse
+	def index(request):
+	return HttpResponse("Hello, World. you're at the learn index.")
+
+9. create urls.py in ur app folder(learn) and add  
+ex.	from . import views
+	urlpatterns = [
+	path('', views.index, name='index'),
+	]	path, view, name (optional)
+
+
+10. update urls.py in root (mylearn)
+	from django.urls import include,
+	urlpatterns = [
+ 	path('learn/', include('learn.urls')),
+	]
+
+11. update settings.py and add
+	INSTALLED_APPS = [
+    		'learn.apps.LearnConfig', #app/apps/function_name
+	]
+	
+	DATABASES = {
+    		'default': {
+        		'ENGINE': 'django.db.backends.mysql',
+        		'NAME': 'learn', #db
+        		'USER': 'root',
+        		'PASSWORD':'',
+        		'HOST':'127.0.0.1', #localhost
+        		'PORT':'3306',  
+    		}
+	}
+
+12. create migration using makemigrations app_name
+	python manage.py makemigrations learn(app)
+	u will get 'learn\migrations\0001_initial.py'
+
+13. run sqlmigrate 0001 (migrationsnumber) to check sql query for create table
+	python manage.py sqlmigrate learn 0001
+
+14. check for errors in the project using check
+	python manage.py check
+	if everything is fine u will find: "System check identified no issues (0 silenced)."
+15. migrate the migration to db
+	python manage.py migrate
+16. add data to db using python shell.. use python manage.py shell
+	import model : from app.models import modelname 
+		ex:    from learn.models import posts
+	check data in the table: posts.objects.all()
+	import datetime: from django.utils import timezone
+	insert data: a = posts(author = "prashant", title = "python", bodytext = "python is becookming a versatile programming language ", timestamp = timezone.now())
+	save using variable(a): a.save()
+	add id to the data:  	a.id
+	exit from shell using 'exit'
+17. create admin superuser using 'python manage.py createsuperuser' and enter the credentials (i used username,email,password : amit, sid00932@gmail.com,amitbora12)
+18. python manage.py runserver(run django server)
+	for admin goto: 127.0.0.1:8000/admin/
+	for learn goto:	127.0.0.1:8000/learn/
+
+19. to rerun the django server after deactivating:
+	goto root directory (where the virtualenv was created)
+	then, enter: ".\djangowork\Scripts\activate"
+	cd to project_name(mysite)
+	py manage.py runserver
+
+				steps for scrapy
+
+1. anaconda prompt, download virtualenv: pip install virtualenv 
+2. create virtualenv : py -m virtualenv env_name, activate it: ".\env_name\Scripts\activate"
+3. installing basic files : pip install requests
+4. install scrapy using pip and conda both: 1st use pip: pip install scrapy and then conda: conda install -c conda-forge scrapy
+ 
+5. create new project: scrapy startproject project_name(mine is mylearn) and see the directory where it is created
+
+6. cd project_name(tutorial)
+7. create a new spider under tutorial/spiders: ex or use 'scrapy genspider spider_nam and address of site to scrape in "" and update it .
+			import scrapy
+			class QuoteSpider(scrapy.Spider):
+			name = "quotes"
+			def start_requests(self):
+				urls = [
+					'http://quotes.toscrape.com/page/1/',
+					'http://quotes.toscrape.com/page/2/',
+					'https://en.wikipedia.org/wiki/Machine_learning',
+				]
+			for url in urls:
+				yield scrapy.Request(url = url, callback = self.parse)
+
+			def parse(self, response):
+			page = response.url.split("/")[-2]
+			filename = "quotes-%s.html" % page
+			with open(filename,'wb') as f:
+				f.write(response.body)	
+			self.log('Saved file %s' % filename)	
+9. run the spider using: scrapy crawl quotes(spider_name)
+10. extracting data: 
+			def parse(self, response):
+		
+			for quote in response.css("div.quote"):
+				yield {
+					"text":quote.css("span.text::text").extract_first(),
+					"author":quote.css("small.author::text").extract_first(),
+					"tags":quote.css("div.tags a.tag::text").extract(),
+				}
+11. storing scraped data
+			scrapy crawl quotes -o quotes.json
+			scrapy crawl spider_name -o filename.json
+
+
+
+
