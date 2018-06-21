@@ -9,7 +9,7 @@ echo "#python">> README.md for python files or repo
 6. 	git status shows the status of ur files any new file will have new written before it
 7. 	git commit -m 'first commit'
 8. 	git remote add origin git@github.com:amitbora007/learn.git or  
-	git remote add origin https://github.com/amitbora007/python.git
+	git remote add origin https://github.com/amitbora007/Python3files.git
 
 9. 	git push -u origin master
 	
@@ -17,4 +17,4 @@ echo "#python">> README.md for python files or repo
 1. ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
 2. Enter a file in which to save the key (/c/Users/you/.ssh/id_rsa):[Press enter]
 3. Enter passphrase (empty for no passphrase):[amitbora12]]
-   Enter same passphrase again: [amitbora12]
+   Enter same passphrase again: [*********2]
