@@ -7,6 +7,7 @@ Created on Tue May 22 19:12:24 2018
 # =============================================================================
 #               1. Importing libraries
 # =============================================================================
+from tkinter import *
 from tkinter import Text
 from tkinter import Button
 from tkinter import filedialog
@@ -31,31 +32,38 @@ from sklearn.svm import SVC
 def show_data():
     #selecting datafile
     name = filedialog.askopenfilename(initialdir = "/", title ="select file")
-    #print (name)
+    print (name)
     txtarea.insert(0.0,name)
     dataset = pandas.read_csv(name)
     
     # showing and describing data
     shape = "\n" + str(dataset.shape)
+    txtarea.insert(END,"\nShape of dataset:")
     txtarea.insert(END, shape)
     print(shape)
     headf= "\n" + str(dataset.head(20))
+    txtarea.insert(END,"\n\nFirst 20 rows of dataset:")
     txtarea.insert(END, headf)
     print(headf)
     desc = "\n" + str(dataset.describe())
+    txtarea.insert(END,"\n\nDescription of dataset:")
     txtarea.insert(END, desc)
     print(desc)
-    classgroup = "\n" + str(dataset.groupby("species").size()) +"\n"
+    classgroup = "\n" + str(dataset.groupby("species").size()) +"\n\n"
     print(classgroup)
+    txtarea.insert(END,"\n\nGroup by species:")
     txtarea.insert(END,classgroup)
     
     # plotting dataset
-    dataset.plot(kind = "box", subplots = True, layout = (4,4))
+    print("\nBox Plot")
+    dataset.plot(kind = "box", subplots = False, layout = (3,3))
     plt.show()
     
+    print("\nHistogram")
     dataset.hist()
     plt.show()
     
+    print("\nScatter Plot")
     scatter_matrix(dataset)
     plt.show()
     
@@ -83,22 +91,28 @@ def show_data():
     # evaluate each model in turn
     results = []
     names = []
+    print("\nAccuracy")
+    txtarea.insert(END,"Accuracy of models with Training sets and crossvalidation:\n")
     for name, model in models:
         kfold = model_selection.KFold(n_splits=10, random_state=seed)
         cv_results = model_selection.cross_val_score(model, X_train, Y_train, cv=kfold, scoring=scoring)
         results.append(cv_results)
         names.append(name)
-        msg = "%s: %f (%f)" % (name, cv_results.mean(), cv_results.std())
+       # msg = "%s: %f (%f)" % (name, cv_results.mean(), cv_results.std())
+        msg = "\n"+"{}:{} {}".format(name, cv_results.mean(),cv_results.std())
         print(msg)
-        txtarea.insert(END, msg)
+        txtarea.insert(END,msg)
 	
     #Select the best model.
     # Compare Algorithms
+
+    #plt.title("Algorithm Comparison")
     fig = plt.figure()
     fig.suptitle('Algorithm Comparison')
     ax = fig.add_subplot(111)
-    plt.boxplot(results)
+    plt.boxplot(results) 
     ax.set_xticklabels(names)
+    #plt.xlabel(names)
     plt.show()
     
     # Make predictions on validation dataset
@@ -106,7 +120,7 @@ def show_data():
     knn = KNeighborsClassifier()
     knn.fit(X_train, Y_train)
     print('for knn');
-    txtarea.insert(END,"\n For KNN: \n\n")
+    txtarea.insert(END,"\n\nFor KNN on validation set: \n\n")
     predictions = knn.predict(X_validation)
     txtarea.insert(END,"Accuracy:")
     acc = str(accuracy_score(Y_validation, predictions)) + "\n"
@@ -124,7 +138,7 @@ def show_data():
     svm = SVC();
     svm.fit(X_train, Y_train);
     print('for svm');
-    txtarea.insert(END,"\n For SVM: \n")
+    txtarea.insert(END,"\nFor SVM on validation set: \n")
     predictions = svm.predict(X_validation)
     txtarea.insert(END,"Accuracy:")
     acc = str(accuracy_score(Y_validation, predictions)) + "\n"
