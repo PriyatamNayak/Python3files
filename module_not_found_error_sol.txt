@@ -1,0 +1,17 @@
+If after installation of module stil it shows "ModuleNotFoundError" while running 
+script check the version of the python interpreter. 
+1. In cmd type: 
+	python
+it will show the version of python interpreter 
+
+2. Open the script and type:
+	import sys
+	print(sys.version)
+you will see the version of the python which is running your script. 
+If both are same and you still getting import error, install python or module again.
+
+If both are not same, you have to move the file to the directory which is running the 
+script
+
+
+ 

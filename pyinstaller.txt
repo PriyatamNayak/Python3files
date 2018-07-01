@@ -1,0 +1,7 @@
+	For creating exe using pyinstaller import all the modules used in script:
+
+1. pip install https://github.com/pyinstaller/pyinstaller/tarball/develop
+2. pip install scipy
+3. pip install pandas
+4. pip install sklearn
+5. pip install matplotlib

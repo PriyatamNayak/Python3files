@@ -1,0 +1,14 @@
+since my scripts are running from anaconda python interpreter at backend. 
+
+to check the running interpreter, add these to your script:
+	import sys
+	print(sys.version)
+
+so , move the extracted folder to anaconda3 folder->open pynput directory and press 
+"shft+rght click" , it will open powershell:
+		or 
+open cmd in pynput directory and type the command:
+
+	python setup.py install
+to install the setup files of pynput. run: import pynput in python interpreter to 
+check the installation

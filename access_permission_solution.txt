@@ -1,0 +1,20 @@
+Change your Python installation folder's security permissions by:
+
+1. Open a Python shell
+2. Go to task manager
+3. Find the python process
+4. Right-click and open location
+5. The folder will open in explorer, go up a directory
+    or
+   goto python installation directory
+6. Right-click the folder and select properties
+7. Click the security tab and hit 'edit'
+8. Add "everyone" and give them permission to Read and Write.
+9. Save your changes
+10. run the installation command like 
+	pip install py+"tab" (autocomplete)
+
+	to install file from local directory
+
+
+
