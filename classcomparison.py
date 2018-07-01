@@ -5,13 +5,14 @@ Created on Tue May 22 19:12:24 2018
 @author: Amit
 """
 # =============================================================================
-#               1. Importing libraries
+#               1. Importing libraries                             
 # =============================================================================
 from tkinter import *
 from tkinter import Text
 from tkinter import Button
 from tkinter import filedialog
 import sys
+print(sys.version)
 import pandas
 from pandas.plotting import scatter_matrix
 import matplotlib.pyplot as plt
@@ -45,11 +46,11 @@ def show_data():
     txtarea.insert(END,"\n\nFirst 20 rows of dataset:")
     txtarea.insert(END, headf)
     print(headf)
-    desc = "\n" + str(dataset.describe())
+    desc = "\n" + str(dataset.describe()) + "\n"
     txtarea.insert(END,"\n\nDescription of dataset:")
     txtarea.insert(END, desc)
     print(desc)
-    classgroup = "\n" + str(dataset.groupby("species").size()) +"\n\n"
+    classgroup = "\n" + str(dataset.groupby("Class").size()) +"\n\n"
     print(classgroup)
     txtarea.insert(END,"\n\nGroup by species:")
     txtarea.insert(END,classgroup)
@@ -91,7 +92,7 @@ def show_data():
     # evaluate each model in turn
     results = []
     names = []
-    print("\nAccuracy")
+    print("\nAccuracy of training set:")
     txtarea.insert(END,"Accuracy of models with Training sets and crossvalidation:\n")
     for name, model in models:
         kfold = model_selection.KFold(n_splits=10, random_state=seed)
@@ -102,7 +103,8 @@ def show_data():
         msg = "\n"+"{}:{} {}".format(name, cv_results.mean(),cv_results.std())
         print(msg)
         txtarea.insert(END,msg)
-	
+		msg1 = sorted("\n" + "{}: {} {}".format(name, cv_results.mean(), cv_results.std()))
+		print(msg1)
     #Select the best model.
     # Compare Algorithms
 
